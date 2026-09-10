@@ -12,6 +12,14 @@ Before opening a pull request, run the full gate:
 pnpm typecheck && pnpm test && pnpm lint && pnpm build
 ```
 
+Then run the protocol conformance suite against the built host. The runner is published from the hub and pinned to the protocol version:
+
+```bash
+npx -y @tesseron/conformance@1.2.1 --host "node conformance-host/dist/bin.js"
+```
+
+On Windows, prefix that with `TESSERON_CONFORMANCE_UNSUPPORTED=uds`: Unix domain sockets have no Windows implementation, and the six UDS fixtures are skipped instead of failed. CI runs them on Linux.
+
 Biome owns formatting and linting. Run `pnpm format` to format changed files, then `pnpm lint` to check them.
 
 Add a changeset for every user-visible package change:
